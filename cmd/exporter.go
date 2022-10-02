@@ -77,10 +77,15 @@ func main() {
 	if err != nil {
 		klog.Fatalf("%s", fmt.Sprintf("failed to create collector: %v", err))
 	}
-	err = newCollector.Attach()
-	if err != nil {
-		klog.Fatalf("%s", fmt.Sprintf("failed to attach : %v", err))
-	}
+	newCollector.Attach()
+	/*
+		so far in attach function it bind with BCC library, so when system without BCC library then it error
+		this error even breaks health Probe
+		err = newCollector.Attach()
+		if err != nil {
+			klog.Fatalf("%s", fmt.Sprintf("failed to attach : %v", err))
+		}
+	*/
 
 	err = prometheus.Register(newCollector)
 	if err != nil {
@@ -101,7 +106,6 @@ func main() {
 			klog.Fatalf("%s", fmt.Sprintf("failed to write response: %v", err))
 		}
 	})
-
 	err = http.ListenAndServe(*address, nil)
 	if err != nil {
 		klog.Fatalf("%s", fmt.Sprintf("failed to bind on %s: %v", *address, err))

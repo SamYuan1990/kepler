@@ -102,10 +102,10 @@ func New() (*Collector, error) {
 
 func (c *Collector) Attach() error {
 	m, err := attacher.AttachBPFAssets()
-	setPodStatProm()
 	if err != nil {
 		return fmt.Errorf("failed to attach bpf assets: %v", err)
 	}
+	setPodStatProm()
 	c.modules = m
 	c.reader()
 	return nil

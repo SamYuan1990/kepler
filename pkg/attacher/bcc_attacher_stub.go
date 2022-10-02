@@ -19,9 +19,7 @@ limitations under the License.
 
 package attacher
 
-import (
-	"fmt"
-)
+import "fmt"
 
 const (
 	CPUCycleLable       = "cpu_cycles"

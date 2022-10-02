@@ -22,7 +22,6 @@ import (
 	"testing"
 
 	. "github.com/onsi/gomega"
-
 	"github.com/sustainable-computing-io/kepler/pkg/utils"
 )
 
