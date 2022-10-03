@@ -127,18 +127,11 @@ ifndef GOPATH
   GOPATH := $(HOME)/go
   GOBIN := $(GOPATH)/bin
 endif
-
-ginkgo-set: tidy-vendor
-	mkdir -p $(GOBIN)
-	mkdir -p ${ENVTEST_ASSETS_DIR}
-	@test -f $(ENVTEST_ASSETS_DIR)/ginkgo || \
-	 (go install github.com/onsi/ginkgo/v2/ginkgo && \
-	  cp $(GOBIN)/ginkgo $(ENVTEST_ASSETS_DIR)/ginkgo)
 	
-test: ginkgo-set tidy-vendor
+test: tidy-vendor
 	@go test -tags $(GO_BUILD_TAGS) ./... --race --bench=. -cover --count=1 --vet=all
 
-test-verbose: ginkgo-set tidy-vendor
+test-verbose: tidy-vendor
 	@go test -tags $(GO_BUILD_TAGS) -covermode=atomic -coverprofile=coverage.out -v ./... --race --bench=. -cover --count=1 --vet=all
 
 test-mac-verbose: tidy-vendor

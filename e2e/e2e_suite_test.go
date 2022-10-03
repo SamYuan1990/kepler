@@ -1,7 +1,6 @@
 package e2e_test
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 
@@ -22,7 +21,7 @@ func TestE2eTest(t *testing.T) {
 }
 
 var _ = BeforeSuite(func() {
-	tmpDir, err = ioutil.TempDir("", "test-kepler")
+	tmpDir, err = os.MkdirTemp("", "test-kepler")
 	Expect(err).NotTo(HaveOccurred())
 	keplerBin, err = gexec.Build("../cmd/exporter.go")
 	Expect(err).NotTo(HaveOccurred())

@@ -77,7 +77,7 @@ func main() {
 	if err != nil {
 		klog.Fatalf("%s", fmt.Sprintf("failed to create collector: %v", err))
 	}
-	newCollector.Attach()
+	_ = newCollector.Attach()
 	/*
 		so far in attach function it bind with BCC library, so when system without BCC library then it error
 		this error even breaks health Probe
