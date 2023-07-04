@@ -107,6 +107,7 @@ cd dev/
 
 Then run the Kepler binary at `_output/bin/_/kepler`
 
+test
 ## Build kepler and base multi-arch images
 ```bash
 ./hack/build-images.sh help
