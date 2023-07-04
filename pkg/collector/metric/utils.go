@@ -99,6 +99,9 @@ func isCounterStatEnabled(label string) bool {
 }
 
 func getNodeName() string {
+	if nodeName := os.Getenv("NODE_NAME"); nodeName != "" {
+		return nodeName
+	}
 	nodeName, err := os.Hostname()
 	if err != nil {
 		klog.Fatalf("could not get the node name: %s", err)
@@ -125,7 +128,7 @@ func getX86Architecture() (string, error) {
 	defer pipe.Close()
 
 	grep.Stdin = pipe
-	err = output.Start()
+	err = output.Run()
 	if err != nil {
 		return "", err
 	}

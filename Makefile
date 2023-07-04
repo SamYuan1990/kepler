@@ -32,9 +32,13 @@ endif
 
 ifdef CTR_CMD
 	CTR_CMD := $(CTR_CMD)
-else 
+else
 	CTR_CMD :=$(or $(shell which podman 2>/dev/null), $(shell which docker 2>/dev/null))
 endif
+
+# use CTR_CMD_PUSH_OPTIONS to add options to <container-runtime> push command.
+# E.g. --tls-verify=false for local develop when using podman
+CTR_CMD_PUSH_OPTIONS ?=
 
 
 ifeq ($(DEBUG),true)
@@ -121,7 +125,7 @@ build_containerized: genbpfassets tidy-vendor format
 .PHONY: build_containerized
 
 push-image:
-	$(CTR_CMD) push $(IMAGE_REPO)/kepler:$(IMAGE_TAG)
+	$(CTR_CMD) push $(CTR_CMD_PUSH_OPTIONS) $(IMAGE_REPO)/kepler:$(IMAGE_TAG)
 .PHONY: push-image
 
 clean-cross-build:
@@ -234,7 +238,7 @@ golint:
 		golangci-lint run --verbose
 
 genbpfassets:
-	GO111MODULE=off go get -d github.com/go-bindata/go-bindata/...
+	GO111MODULE=off go get -u github.com/go-bindata/go-bindata/...
 	./hack/bindata.sh
 .PHONY: genbpfassets
 
@@ -260,8 +264,8 @@ cluster-sync:
 .PHONY: cluster-sync
 
 cluster-up:
-	rm -rf local-dev-cluster
-	git clone https://github.com/sustainable-computing-io/local-dev-cluster.git --depth=1
-	cd local-dev-cluster && ./main.sh
+	./hack/cluster-up.sh
 .PHONY: cluster-up
 
+check: tidy-vendor set_govulncheck govulncheck format golint test
+.PHONY: check

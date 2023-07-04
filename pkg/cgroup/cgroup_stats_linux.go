@@ -34,7 +34,7 @@ type CCgroupV1StatManager struct {
 	manager cgroups.Cgroup
 }
 
-type CCgroupV12StatManager struct {
+type CCgroupV2StatManager struct {
 	manager *cgroup2.Manager
 }
 
@@ -68,7 +68,7 @@ func NewCGroupStatManager(pid int) (CCgroupStatHandler, error) {
 		if err != nil {
 			return nil, err
 		}
-		return CCgroupV12StatManager{
+		return CCgroupV2StatManager{
 			manager: manager,
 		}, nil
 	}
@@ -78,6 +78,9 @@ func (c CCgroupV1StatManager) SetCGroupStat(containerID string, cgroupStatMap ma
 	stat, err := c.manager.Stat(cgroups.IgnoreNotExist)
 	if err != nil {
 		return err
+	}
+	if stat.Memory == nil {
+		return fmt.Errorf("cgroup metrics does not exist, the cgroup might be deleted")
 	}
 	// cgroup v1 memory
 	if stat.Memory != nil {
@@ -96,20 +99,23 @@ func (c CCgroupV1StatManager) SetCGroupStat(containerID string, cgroupStatMap ma
 		for _, ioEntry := range stat.Blkio.IoServiceBytesRecursive {
 			if ioEntry.Op == "Read" {
 				cgroupStatMap[config.CgroupfsReadIO].AddDeltaStat(containerID, ioEntry.Value)
+				cgroupStatMap[config.BlockDevicesIO].AddDeltaStat(containerID, 1)
 			}
 			if ioEntry.Op == "Write" {
 				cgroupStatMap[config.CgroupfsWriteIO].AddDeltaStat(containerID, ioEntry.Value)
 			}
-			cgroupStatMap[config.BlockDevicesIO].AddDeltaStat(containerID, 1)
 		}
 	}
 	return nil
 }
 
-func (c CCgroupV12StatManager) SetCGroupStat(containerID string, cgroupStatMap map[string]*types.UInt64StatCollection) error {
+func (c CCgroupV2StatManager) SetCGroupStat(containerID string, cgroupStatMap map[string]*types.UInt64StatCollection) error {
 	stat, err := c.manager.Stat()
 	if err != nil {
 		return err
+	}
+	if stat.Memory == nil {
+		return fmt.Errorf("cgroup metrics does not exist, the cgroup might be deleted")
 	}
 	// memory
 	if stat.Memory != nil {
