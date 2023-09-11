@@ -10,8 +10,8 @@ on:
 
 jobs:
   image:
-    uses: ./.github/workflows/image/image.yml
+    uses: ./.github/workflows/image.yml
   unit_test:
-    uses: ./.github/workflows/test/unit_test.yml
+    uses: ./.github/workflows/unit_test.yml
   scorecard:
-    uses: ./.github/workflows/openSSF/scorecard.yml
+    uses: ./.github/workflows/scorecard.yml

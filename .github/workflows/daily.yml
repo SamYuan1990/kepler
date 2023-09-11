@@ -6,8 +6,8 @@ on:
 
 jobs:
   gosec:
-    uses: ./.github/workflows/golang/gosec.yml
+    uses: ./.github/workflows/gosec.yml
   image:
-    uses: ./.github/workflows/image/image.yml
+    uses: ./.github/workflows/image.yml
   scorecard:
-    uses: ./.github/workflows/openSSF/scorecard.yml
+    uses: ./.github/workflows/scorecard.yml

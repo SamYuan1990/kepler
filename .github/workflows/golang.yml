@@ -1,0 +1,64 @@
+name: gofmt
+
+on:
+  workflow_call:
+
+env:
+  GO_VERSION: "1.18"
+
+permissions:
+  contents: read
+
+jobs:
+  gofmt_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ${{env.GO_VERSION}}
+      - name: run gofmt test
+        run: ./automation/presubmit-tests/gofmt.sh
+
+  escapes_detect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ${{env.GO_VERSION}}
+      - name: run escapes detect
+        run: make escapes_detect
+
+  golangci:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ${{env.GO_VERSION}}
+      - uses: actions/checkout@v4
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.52.2
+
+  govet_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ${{env.GO_VERSION}}
+      - name: Run go vet
+        run: go vet ./...
+
+  vulnerability_detect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ${{env.GO_VERSION}}
+      - name: run vulnerability detect
+        run: make govulncheck
