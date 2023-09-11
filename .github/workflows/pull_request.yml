@@ -7,16 +7,14 @@ on:
       - 'doc/**'
       - 'enhancements/**'
       - '*.md'
-    banches:
-      - main
 
 jobs:
   golang:
-    uses: ./.github/workflows/gofmt.yml
+    uses: ./.github/workflows/golang.yml
   gosec:
     uses: ./.github/workflows/gosec.yml
-  local_dev:
-    uses: ./.github/workflows/local_dev.yml
+  local_env:
+    uses: ./.github/workflows/local_env.yml
   unit_test:
     uses: ./.github/workflows/unit_test.yml
   unit_test_mac:
