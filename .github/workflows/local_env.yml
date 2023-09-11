@@ -1,11 +1,7 @@
 name: local env set up
 
 on:
-  pull_request:
-    paths-ignore:
-      - 'doc/**'
-      - 'enhancements/**'
-      - '*.md'
+  workflow_call:
 
 jobs:
   integration_test:
