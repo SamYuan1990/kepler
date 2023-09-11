@@ -15,7 +15,7 @@ jobs:
     runs-on: [self-hosted, linux, x64]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -86,7 +86,7 @@ jobs:
         cluster_provider: [kind]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download Kepler test image artifact
         uses: actions/download-artifact@v3

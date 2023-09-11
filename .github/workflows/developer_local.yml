@@ -1,17 +1,13 @@
-name: Unit test Mac
-
+name: developer at local
+# for developer local environment script or test usage
 on:
-  pull_request:
-    paths-ignore:
-      - 'doc/**'
-      - 'enhancements/**'
-      - '*.md'
+  workflow_call:
 
 jobs:
   unit_test_mac:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         persist-credentials: false
         fetch-depth: 0
@@ -25,3 +21,13 @@ jobs:
           git config --global --add safe.directory /kepler
     - name: Run 
       run: make test-mac-verbose
+
+  local_env:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        kube_provider: [kind]
+    steps:
+      - uses: actions/checkout@v4
+      - name: local cluster set up
+        run: make cluster-up

@@ -1,11 +1,7 @@
 name: Integration test with libbpf
 
 on:
-  pull_request:
-    paths-ignore:
-      - 'doc/**'
-      - 'enhancements/**'
-      - '*.md'
+  workflow_call:
 
 env:
   GO_VERSION: "1.18"
@@ -15,10 +11,10 @@ env:
 
 jobs:
   build-kepler_with_libbpf:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: install Go
         uses: actions/setup-go@v3
@@ -48,13 +44,13 @@ jobs:
 
   integration_test_with_libbpf:
     needs: [build-kepler_with_libbpf]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         cluster_provider: [kind,microshift]
     steps:
       - name: checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: download Kepler image artifact
         uses: actions/download-artifact@v3
