@@ -1,0 +1,17 @@
+name: Push
+on:
+  branch_protection_rule:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'doc/**'
+      - 'enhancements/**'
+      - '*.md'
+
+jobs:
+  image:
+    uses: ./.github/workflows/image/image.yml
+  unit_test:
+    uses: ./.github/workflows/test/unit_test.yml
+  scorecard:
+    uses: ./.github/workflows/openSSF/scorecard.yml

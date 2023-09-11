@@ -1,11 +1,7 @@
 name: Integration test with libbpf
 
 on:
-  pull_request:
-    paths-ignore:
-      - 'doc/**'
-      - 'enhancements/**'
-      - '*.md'
+  workflow_call:
 
 env:
   GO_VERSION: "1.18"

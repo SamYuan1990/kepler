@@ -1,0 +1,37 @@
+name: Pull request
+
+on:
+  branch_protection_rule:
+  pull_request:
+    paths-ignore:
+      - 'doc/**'
+      - 'enhancements/**'
+      - '*.md'
+    banches:
+      - main
+
+jobs:
+  gofmt:
+    uses: ./.github/workflows/golang/gofmt.yml
+  gogc:
+    uses: ./.github/workflows/golang/gogc.yml
+  gocilint:
+    uses: ./.github/workflows/golang/golangci-lint.yml
+  gosec:
+    uses: ./.github/workflows/golang/gosec.yml
+  govet:
+    uses: ./.github/workflows/golang/govet.yml
+  govulnerability:
+    uses: ./.github/workflows/golang/govulnerability.yml
+  local_dev:
+    uses: ./.github/workflows/local_dev.yml
+  unit_test:
+    uses: ./.github/workflows/test/unit_test.yml
+  unit_test_mac:
+    uses: ./.github/workflows/test/unit_test_mac.yml
+  integration_test:
+    uses: ./.github/workflows/test/integration_test.yml
+  integration_test_libbpf:
+    uses: ./.github/workflows/test/integration_test_libbpf.yml
+
+  

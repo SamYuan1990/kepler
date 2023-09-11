@@ -1,11 +1,7 @@
 name: gofmt
 
 on:
-  pull_request:
-    paths-ignore:
-      - 'doc/**'
-      - 'enhancements/**'
-      - '*.md'
+  workflow_call:
 
 jobs:
   gofmt_test:

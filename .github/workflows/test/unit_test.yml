@@ -1,17 +1,7 @@
 name: Unit test
 
 on:
-  pull_request:
-    paths-ignore:
-      - 'doc/**'
-      - 'enhancements/**'
-      - '*.md'
-  push:
-    branches: [ main ]
-    paths-ignore:
-      - 'doc/**'
-      - 'enhancements/**'
-      - '*.md'
+  workflow_call:
 
 permissions:
   pull-requests: write

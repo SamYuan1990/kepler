@@ -1,11 +1,7 @@
 name: govet
 
 on:
-  pull_request:
-    paths-ignore:
-      - 'doc/**'
-      - 'enhancements/**'
-      - '*.md'
+  workflow_call:
 
 jobs:
   govet_test:

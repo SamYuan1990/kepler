@@ -1,0 +1,13 @@
+name: Scheduled build
+on:
+  branch_protection_rule:
+  schedule:
+    - cron: "12 9 * * *"
+
+jobs:
+  gosec:
+    uses: ./.github/workflows/golang/gosec.yml
+  image:
+    uses: ./.github/workflows/image/image.yml
+  scorecard:
+    uses: ./.github/workflows/openSSF/scorecard.yml
