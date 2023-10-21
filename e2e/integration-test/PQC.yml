@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-PQC
+  name: my-pqc
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: my-PQC
+      app: my-pqc
   template:
     metadata:
       labels:
-        app: my-PQC
+        app: my-pqc
     spec:
       containers:
-      - name: my-PQC
+      - name: my-pqc
         image: ghcr.io/samyuan1990/trash:postcrypto

@@ -83,7 +83,7 @@ function intergration_test() {
     kubectl apply -f ./e2e/integration-test/PQC.yml -n kepler
     go test ./e2e/integration-test/... --tags $tags -v --race --bench=. -cover --count=1 --vet=all
     kubectl -n kepler logs -f deployment/my-crypto
-    kubectl -n kepler logs -f deployment/my-PQC
+    kubectl -n kepler logs -f deployment/my-pqc
 }
 
 function platform_validation() {
