@@ -79,7 +79,12 @@ function intergration_test() {
     while true; do kubectl port-forward --address localhost -n kepler service/kepler-exporter 9102:9102; done &
     kubectl logs -n kepler daemonset/kepler-exporter
     kubectl get pods -n kepler -o yaml
+    #kubectl apply -f ./e2e/integration-test/crypto.yml -n kepler
+    kubectl apply -f ./e2e/integration-test/PQC.yml -n kepler
     go test ./e2e/integration-test/... --tags $tags -v --race --bench=. -cover --count=1 --vet=all
+    #kubectl -n kepler logs -f deployment/my-crypto
+    kubectl -n kepler logs -f deployment/my-pqc
+    top -b -n 1
 }
 
 function platform_validation() {
