@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-crypto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-crypto
+  template:
+    metadata:
+      labels:
+        app: my-crypto
+    spec:
+      containers:
+      - name: my-crypto
+        image: ghcr.io/samyuan1990/trash:crypto
