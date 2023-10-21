@@ -84,7 +84,7 @@ function intergration_test() {
     go test ./e2e/integration-test/... --tags $tags -v --race --bench=. -cover --count=1 --vet=all
     #kubectl -n kepler logs -f deployment/my-crypto
     kubectl -n kepler logs -f deployment/my-pqc
-    top
+    top -b
 }
 
 function platform_validation() {
