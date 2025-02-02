@@ -24,6 +24,11 @@ jobs:
           baseURL: https://api.deepseek.com
           apiKey: ${{ secrets.API_KEY }}
           fileOverWrite: true
+          model: deepseek-chat
+          dirPath: ./
+          prompt: please help generate go doc for this function 
+          maxIterations: 3
+          runType: godoc
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
