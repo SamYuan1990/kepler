@@ -36,7 +36,7 @@ jobs:
           apiKey: ${{ secrets.API_KEY }}
           fileOverWrite: true
           model: deepseek-chat
-          dirPath: ./example
+          dirPath: ./manifests/k8s/config/exporter/exporter.yaml
           prompt:
             please give me a pod deployment suggestion, according to CVSS 3.1
             scrore and deployment.yaml,
