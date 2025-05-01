@@ -78,7 +78,29 @@ type AppConfig struct {
 	DisablePowerMeter            bool
 	TLSFilePath                  string
 }
-
+// Comments below is assisted by Gen AI
+// // newAppConfig initializes and returns a new instance of AppConfig with default values.
+// It sets up command-line flags for configuring various aspects of the application.
+// The function returns a pointer to the initialized AppConfig struct.
+//
+// The following flags are defined:
+//   - config-dir: Path to the base directory for configuration files (default: config.BaseDir).
+//   - address: The bind address for the server (default: "0.0.0.0:8888").
+//   - metrics-path: The path where Prometheus metrics are exposed (default: "/metrics").
+//   - enable-gpu: Whether to enable GPU support (requires libnvidia-ml to be installed) (default: false).
+//   - enable-cgroup-id: Whether to enable eBPF to collect cgroup IDs (default: true).
+//   - expose-hardware-counter-metrics: Whether to expose hardware counters as Prometheus metrics (default: true).
+//   - enable-msr: Whether to allow MSR (Model-Specific Registers) to obtain energy data (default: false).
+//   - kubeconfig: Absolute path to the kubeconfig file; if empty, in-cluster configuration is used (default: "").
+//   - apiserver: Whether to enable the API server; if disabled, pod information is collected from kubelet (default: true).
+//   - redfish-cred-file-path: Path to the Redfish credential file (default: "").
+//   - expose-estimated-idle-power: Whether to expose the estimated idle power as a metric (default: false).
+//   - machine-spec: Path to the machine specification file in JSON format (default: "").
+//   - disable-power-meter: Whether to disable power meter readings and use the estimator for node powers (default: false).
+//   - web.config.file: Path to the TLS web configuration file (default: "").
+//
+// Returns:
+//   - *AppConfig: A pointer to the initialized AppConfig struct with default values.
 func newAppConfig() *AppConfig {
 	// Initialize flags
 	cfg := &AppConfig{}
@@ -99,7 +121,21 @@ func newAppConfig() *AppConfig {
 
 	return cfg
 }
-
+// Comments below is assisted by Gen AI
+// // healthProbe is an HTTP handler function that responds to health check requests.
+// It writes an HTTP 200 OK status code and a simple "ok" message to the response.
+// If the response cannot be written, the function logs a fatal error and terminates the program.
+//
+// Example usage:
+//   http.HandleFunc("/health", healthProbe)
+//
+// Parameters:
+//   - w: The http.ResponseWriter used to write the HTTP response.
+//   - req: The *http.Request representing the incoming HTTP request.
+//
+// Notes:
+//   - This function is typically used as a health check endpoint in microservices or applications.
+//   - If the response writing fails, the function logs the error and exits the program using klog.Fatalf.
 func healthProbe(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	_, err := w.Write([]byte(`ok`))
@@ -107,7 +143,21 @@ func healthProbe(w http.ResponseWriter, req *http.Request) {
 		klog.Fatalf("%s", fmt.Sprintf("failed to write response: %v", err))
 	}
 }
-
+// Comments below is assisted by Gen AI
+// // main is the entry point of the application. It initializes the application configuration,
+// parses command-line flags, and sets up the necessary configurations for the application to run.
+//
+// The function performs the following steps:
+//  1. Initializes logging flags using klog.
+//  2. Creates a new application configuration using the newAppConfig function.
+//  3. Parses command-line flags provided by the user.
+//  4. Initializes the application configuration by calling config.Initialize with the base directory
+//     specified in the appConfig. If initialization fails, the function logs a fatal error and exits.
+//
+// Example usage:
+//   go run main.go --base-dir=/path/to/config
+//
+// Note: Ensure that all required flags are defined in the newAppConfig function before calling flag.Parse.
 func main() {
 	start := time.Now()
 	klog.InitFlags(nil)
